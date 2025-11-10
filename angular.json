@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputMode": "file",
             "outputPath" : "dist/chat-app-ui",
             "browser": "src/main.ts",
             "polyfills": [
