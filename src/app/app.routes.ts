@@ -8,7 +8,3 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: '**', redirectTo: 'login'},
 ];
-
-export const environment = {
-  apiUrl: 'https://localhost:7190/api',
-};

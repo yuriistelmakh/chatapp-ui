@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthRequest } from '../dtos/authrequest';
-import { environment } from '../app.routes';
 import { AuthResult } from '../dtos/authresult';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

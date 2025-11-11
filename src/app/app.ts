@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { environment } from './app.routes';
 import { MatButtonModule } from '@angular/material/button';
-import { Login } from "./features/auth/login/login";
 import { Signup } from "./features/auth/signup/signup";
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
