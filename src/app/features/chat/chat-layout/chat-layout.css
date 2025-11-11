@@ -1,0 +1,11 @@
+.chat-layout {
+    display: flex;
+    height: 80vh;
+    width: 70vw;
+    background-color: var(--mat-sys-surface);
+    border-radius: 20px;
+}
+
+app-chat-window {
+    flex: 1;
+}

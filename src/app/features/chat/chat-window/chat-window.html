@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="top-bar">
+        <div class="top-bar-content">
+            {{ (selectedChat ? selectedChat.name : "No chat selected") }}
+        </div>
+    </div>
+
+    <div class="chat-area">
+        @if(!selectedChat)
+        {
+            <p class="no-chat-selected">select a chat, bozo</p>
+        }
+        @else
+        {
+            <ul #messagesList class="messages-list">
+                @for(message of messages; track message)
+                {
+                    <li [ngClass]="{'outgoing': !message.isIncoming}">
+                        <app-message [message]="message"></app-message>
+                    </li>
+                }
+                <li #bottomAnchor class="anchor" aria-hidden="true"></li>
+            </ul>
+            <div class="input-area">
+                <input [(ngModel)]="messageText" class="input">
+                <button class="send-btn" (click)="onSend()" matFab="filled">
+                    <mat-icon style="margin: 0px">send</mat-icon>
+                </button>
+            </div>
+        }
+    </div>
+</div>

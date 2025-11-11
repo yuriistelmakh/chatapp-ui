@@ -1,0 +1,16 @@
+.container {
+    background-color: var(--mat-sys-inverse-primary);
+    width: 280px;
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+}
+
+h2 {
+    padding: 20px;
+    color: var(--mat-sys-on-primary-container);
+}
+
+.chats-list {
+    list-style: none;
+    padding: 0;
+}

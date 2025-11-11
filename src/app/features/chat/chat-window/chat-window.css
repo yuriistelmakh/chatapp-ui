@@ -1,0 +1,101 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-top-bar {
+    width: 100%;
+}
+
+.top-bar-content {
+    padding: 20px;
+    background-color: var(--mat-sys-on-primary-container);
+    color: var(--mat-sys-surface);
+    font-size: 18px;
+}
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex: 1;
+    min-height: 0;
+}
+
+.messages-list {
+    list-style: none;
+    padding: 10px 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    gap: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mat-sys-primary) transparent;
+    scrollbar-gutter: stable both-edges;
+    scroll-behavior: smooth;
+}
+
+.messages-list li.outgoing {
+    align-self: flex-end;
+}
+
+.messages-list li:not(.outgoing){
+    align-self: flex-start;
+}
+
+.input-area {
+    width: 100%;
+    min-height: 70px;
+    background-color: var(--mat-sys-on-primary-container);
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.input {
+    margin: 0 5px;
+    flex: 1;
+    padding: 12px;
+    background-color: var(--mat-sys-primary-container);
+    border: 0;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+}
+
+.send-btn {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+/* WebKit scrollbar styling */
+.messages-list::-webkit-scrollbar { width: 8px; }
+.messages-list::-webkit-scrollbar-track { background: transparent; }
+.messages-list::-webkit-scrollbar-thumb {
+    background-color: var(--mat-sys-primary);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+.messages-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--mat-sys-primary-container);
+}
+
+/* Dark theme overrides if html.dark is used */
+html.dark .messages-list { scrollbar-color: var(--mat-sys-primary) transparent; }
+html.dark .messages-list::-webkit-scrollbar-thumb { background-color: var(--mat-sys-primary); }
+
+/* anchor element to ensure scrollIntoView has a target with size */
+.messages-list .anchor { height: 1px; }

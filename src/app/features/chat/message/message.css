@@ -1,0 +1,28 @@
+.container {
+    padding: 12px;
+    min-width: 120px;
+    max-width: 300px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.container.incoming {
+    background-color: var(--mat-sys-primary-container)
+}
+
+.container.outgoing {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-surface);
+}
+
+.container.incoming .sender-name {
+    color: var(--mat-sys-on-primary-container);
+}
+
+.sent-at {
+    align-self: flex-end;
+    font-size: 12px;
+}
