@@ -4,7 +4,7 @@ import { MessageDto } from '../dtos/MessageDto';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { ChatDto } from '../dtos/ChatDto';
-import { ChatService } from './chat';
+import { ChatService } from './chat.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +12,7 @@ import { ChatService } from './chat';
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   messages: MessageDto[] = [];
+  chats: ChatDto[] = [];
 
   constructor(private auth: AuthService, private chat: ChatService) {}
 
@@ -34,6 +35,10 @@ export class SignalRService {
         msg.isIncoming = true;
         this.messages.push(msg);
       }
+    });
+
+    this.hubConnection.on('ChatCreated', (chatDto: ChatDto) => {
+        this.chats.push(chatDto);
     });
   }
 
@@ -61,6 +66,7 @@ export class SignalRService {
             });
 
             this.messages = messages;
+            console.log('u joined a chat');
           },
           error: err => {
             console.error("Error ocurred fetching messages: ", err);

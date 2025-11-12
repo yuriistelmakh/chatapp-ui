@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { MessageDto } from '../dtos/MessageDto';
 import { environment } from '../../environments/environment';
 import { ChatDto } from '../dtos/ChatDto';
+import { UserDto } from '../dtos/UserDto';
+import { CreateChatDto } from '../dtos/CreateChatDto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +19,9 @@ export class ChatService {
 
   getChats(userId: number) : Observable<ChatDto[]> {
     return this.http.get<ChatDto[]>(`${environment.apiUrl}/chats/${userId}`);
+  }
+
+  addChat(createChatDto: CreateChatDto) {
+     return this.http.post(`${environment.apiUrl}/chats`, createChatDto);
   }
 }

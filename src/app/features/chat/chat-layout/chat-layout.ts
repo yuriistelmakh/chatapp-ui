@@ -3,10 +3,11 @@ import { ChatSidebarComponent } from '../chat-sidebar/chat-sidebar';
 import { ChatWindow } from '../chat-window/chat-window';
 import { ChatDto } from '../../../dtos/ChatDto';
 import { SignalRService } from '../../../services/signal-r.service';
+import { ChatUsersList } from "../chat-users-list/chat-users-list";
 
 @Component({
   selector: 'app-chat-layout',
-  imports: [ChatSidebarComponent, ChatWindow],
+  imports: [ChatSidebarComponent, ChatWindow, ChatUsersList],
   templateUrl: './chat-layout.html',
   styleUrl: './chat-layout.css',
 })

@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  padding: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.selected-users {
+  margin-top: 10px;
+}
+
+mat-chip-listbox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dialog-actions {
+    align-self: flex-end;
+    display: flex;
+    gap: 5px;
+}

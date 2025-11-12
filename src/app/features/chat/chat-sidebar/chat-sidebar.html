@@ -2,13 +2,16 @@
     <div class="content">
         <h2>Select a chat</h2>
         <ul class="chats-list">
-            @for (chat of chats; track chat.id)
+            @for (chat of signalr.chats; track chat.id)
             {
                 <li (click)="onChatSelected(chat)" style="cursor: pointer;">
                     <app-chat-sidebar-item [chat]="chat"></app-chat-sidebar-item>
                 </li>
             }
         </ul>
+        <button matButton="filled" class="new-chat-btn" (click)="openCreateChatDialog()">
+            Create new chat
+        </button>
     </div>
     
 </div>
