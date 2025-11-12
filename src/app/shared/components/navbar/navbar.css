@@ -1,0 +1,11 @@
+header {
+    background-color: var(--mat-sys-inverse-primary);
+    color: var(--mat-sys-on-primary-container);
+    display: flex;
+    padding: 16px;
+}
+
+.welcome-msg {
+    font-size: 16px;
+    font-weight: bold;
+}

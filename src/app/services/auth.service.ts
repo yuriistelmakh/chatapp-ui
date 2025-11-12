@@ -29,14 +29,32 @@ export class AuthService {
     );
   }
 
-  getUserId(): number | null {
+  private getDecodedToken(): JwtPayload | null {
     const token = localStorage.getItem("token");
     if(token)
     {
-      const decoded = jwtDecode<JwtPayload>(token);
-      return parseInt(decoded.nameid);
+      return jwtDecode<JwtPayload>(token);
     }
+    return null;
+  }
 
+  getUserId(): number | null {
+    var decodedToken = this.getDecodedToken();
+    if (decodedToken)
+    {
+      return parseInt(decodedToken.nameid);
+    }
+    
+    return null;
+  }
+
+  getUserName(): string | null {
+    var decodedToken = this.getDecodedToken();
+    if (decodedToken)
+    {
+      return decodedToken.unique_name;
+    }
+    
     return null;
   }
 }

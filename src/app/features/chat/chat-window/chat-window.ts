@@ -16,6 +16,7 @@ import { MatAnchor, MatFabAnchor } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule, NgModel } from '@angular/forms';
 import { SignalRService } from '../../../services/signal-r.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-chat-window',
@@ -28,15 +29,13 @@ export class ChatWindow implements OnInit {
 
   messageText: string = '';
 
-  userName: string = 'Me';
-
   @ViewChild('bottomAnchor')
   private bottom?: ElementRef<HTMLDivElement>;
 
   @ViewChild('messagesList')
   private list?: ElementRef<HTMLUListElement>;
 
-  constructor(public signalr: SignalRService) {}
+  constructor(public signalr: SignalRService, private auth: AuthService) {}
 
   private scrollToBottom() {
     const el = this.list?.nativeElement;
@@ -73,7 +72,7 @@ export class ChatWindow implements OnInit {
         id: this.signalr.messages.length + 1,
         content: this.messageText,
         createdAt: new Date(Date.now()),
-        senderName: this.userName,
+        senderName: this.auth.getUserName()!,
         isIncoming: false
       });
 
