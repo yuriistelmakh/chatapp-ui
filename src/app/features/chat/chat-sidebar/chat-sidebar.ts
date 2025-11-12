@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ChatSidebarItem } from "../chat-sidebar-item/chat-sidebar-item";
 import { UserDto } from '../../../dtos/UserDto';
 import { ChatDto } from '../../../dtos/ChatDto';
 import { MessageDto } from '../../../dtos/MessageDto';
 import { SignalRService } from '../../../services/signal-r.service';
+import { ChatService } from '../../../services/chat';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -11,31 +13,23 @@ import { SignalRService } from '../../../services/signal-r.service';
   templateUrl: './chat-sidebar.html',
   styleUrl: './chat-sidebar.css',
 })
-export class ChatSidebarComponent {
+export class ChatSidebarComponent implements OnInit {
   @Output() chatSelected = new EventEmitter<ChatDto>();
+
+  constructor(private chat: ChatService, private auth: AuthService) {}
 
   onChatSelected(chat: ChatDto) {
     this.chatSelected.emit(chat);
   }
 
-  chats: ChatDto[] = [
-    {
-      id: 1,
-      name: "Chat1",
-      isGroup: false,
-      createdAt: new Date(Date.now())
-    },
-    {
-      id: 2,
-      name: "Chat2",
-      isGroup: false,
-      createdAt: new Date(Date.now())
-    },
-    {
-      id: 3,
-      name: "Chat3",
-      isGroup: false,
-      createdAt: new Date(Date.now())
-    },
-  ];
+  chats: ChatDto[] = [];
+
+  ngOnInit(): void {
+    this.chat.getChats(this.auth.getUserId()!).subscribe({
+      next: chats => {
+        this.chats = chats;
+      },
+      error: err => console.error(err)
+    });
+  }
 }

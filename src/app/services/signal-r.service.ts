@@ -4,6 +4,7 @@ import { MessageDto } from '../dtos/MessageDto';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 import { ChatDto } from '../dtos/ChatDto';
+import { ChatService } from './chat';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class SignalRService {
   private hubConnection!: signalR.HubConnection;
   messages: MessageDto[] = [];
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private chat: ChatService) {}
 
   startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -47,14 +48,24 @@ export class SignalRService {
   joinChat(chatId: number) {
     this.hubConnection
       .invoke<MessageDto[]>('JoinChat', chatId)
-      .then((messages) => {
-        messages.forEach((m) => {
-          if (m.senderName !== this.auth.getUserName()) {
-            m.isIncoming = true;
+      .then(() => {
+        const userName = this.auth.getUserName();
+        this.chat.getMessages(chatId).subscribe({
+          next: messages => {
+            messages.forEach((m: MessageDto) => {
+              if (m.senderName != userName)
+              {
+                m.isIncoming = true;
+              }
+              return m;
+            });
+
+            this.messages = messages;
+          },
+          error: err => {
+            console.error("Error ocurred fetching messages: ", err);
           }
         });
-
-        this.messages = messages;
       })
       .catch((err) => console.error('JoinChat error:', err));
   }
