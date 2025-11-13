@@ -8,6 +8,8 @@ import { ChatService } from './chat.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { UserDto } from '../dtos/UserDto';
 import { UserService } from './user.service';
+import { AddUserToChatDto } from '../dtos/AddUserToChatDto';
+import { CreateChatDto } from '../dtos/CreateChatDto';
 
 @Injectable({
   providedIn: 'root',
@@ -44,9 +46,22 @@ export class SignalRService {
       }
     });
 
-    this.hubConnection.on('ChatCreated', (chatDto: ChatDto) => {
-        this.chats.push(chatDto);
+    this.hubConnection.on('ChatCreated', (createChatDto: CreateChatDto) => {
+        if(createChatDto.memberIds.includes(this.auth.getUserId()!))
+        {
+          this.chats.push(createChatDto.chat);
+        }
     });
+
+    this.hubConnection.on('NewMemberAdded', (dto: AddUserToChatDto) => {
+      this.users.push(dto.user);
+
+      console.log(this.auth.getUserId(), " ", dto.user.id)
+      if(this.auth.getUserId() == dto.user.id)
+      {
+        this.chats.push(dto.chat);
+      }
+    })
   }
 
   sendMessage(chatId: number, message: MessageDto) {
@@ -85,6 +100,11 @@ export class SignalRService {
         });
       })
       .catch((err) => console.error('JoinChat error:', err));
+  }
+
+  addUserToChat(chatId: number, userId: number) {
+    this.hubConnection.invoke("NewMember", chatId, userId)
+      .catch((err) => console.error(err));
   }
 
   leaveChat(chatId: number) {

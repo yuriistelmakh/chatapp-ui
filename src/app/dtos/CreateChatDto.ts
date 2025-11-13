@@ -1,4 +1,6 @@
+import { ChatDto } from "./ChatDto";
+
 export interface CreateChatDto {
-    chatName: string,
+    chat: ChatDto,
     memberIds: number[]
 }

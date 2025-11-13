@@ -28,7 +28,6 @@ import { UserDto } from '../../../dtos/UserDto';
     MatOptionModule,
     MatIconModule,
     AsyncPipe,
-    NgIf,
     MatAnchor
 ],
   templateUrl: './new-chat-dialog.html',
@@ -102,7 +101,12 @@ export class NewChatDialog implements OnInit {
     if (current) {
       userIds.push(current);
     }
-    this.chatService.addChat({chatName: this.chatName, memberIds: userIds}).subscribe(data => console.log(data))
+    this.chatService
+      .addChat({
+        chat: { id: 0, name: this.chatName, isGroup: false, createdAt: new Date(Date.now()) },
+        memberIds: userIds,
+      })
+      .subscribe((data) => console.log(data));
     this.dialogRef.close();
   }
 }

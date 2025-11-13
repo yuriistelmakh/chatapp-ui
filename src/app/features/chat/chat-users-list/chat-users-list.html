@@ -1,14 +1,20 @@
 @if (this.selectedChat) {
 <div class="container">
-    <div class="cotnent">
+    <div class="content">
         <h2>Chat members</h2>
         <ul>
             @for (user of this.signalr.users; track user) {
             <li>
-                {{ user.username }}
+                <mat-icon>person</mat-icon> {{ user.username }}
             </li>
             }
         </ul>
+        <button class="add-user-btn" matButton="filled" (click)="openCreateChatDialog()">
+            <mat-icon>
+                person_add
+            </mat-icon>
+            New member
+        </button>
     </div>
 </div>
 }

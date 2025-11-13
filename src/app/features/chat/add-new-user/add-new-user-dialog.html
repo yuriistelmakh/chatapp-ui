@@ -1,0 +1,28 @@
+<div class="container">
+    <div mat-dialog-content class="content">
+        <h1 mat-dialog-title>Add a new member</h1>
+        <p class="description">Choose one user to add to this chat.</p>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Username</mat-label>
+            <input matInput [formControl]="formControl" [matAutocomplete]="auto" placeholder="Search user..." />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser"
+                (optionSelected)="onUserSelected($event)">
+                @for (option of filteredOptions | async; track option.id) {
+                <mat-option [value]="option">
+                    <mat-icon class="user-icon">person</mat-icon>
+                    {{ option.username }}
+                </mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions class="dialog-actions">
+        <button matButton="filled" (click)="cancel()">Cancel</button>
+        <button matButton="filled" color="primary" (click)="confirm()" [disabled]="!selectedUser">
+            Add member
+        </button>
+    </div>
+</div>

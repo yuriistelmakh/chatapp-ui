@@ -10,7 +10,8 @@
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Username</mat-label>
             <input matInput [formControl]="formControl" [matAutocomplete]="auto" placeholder="Search user..." />
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser" (optionSelected)="onUserSelected($event)">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayUser"
+                (optionSelected)="onUserSelected($event)">
                 @for (option of filteredOptions | async; track option.id) {
                 <mat-option [value]="option">
                     <mat-icon class="user-icon">person</mat-icon>
@@ -19,7 +20,8 @@
                 }
             </mat-autocomplete>
         </mat-form-field>
-        <div class="selected-users" *ngIf="selectedUsers.length > 0">
+        @if (selectedUsers.length > 0) {
+        <div class="selected-users">
             <h3>Selected members:</h3>
             <mat-chip-listbox>
                 @for (user of selectedUsers; track user.id) {
@@ -33,6 +35,7 @@
                 }
             </mat-chip-listbox>
         </div>
+        }
     </div>
     <div mat-dialog-actions class="dialog-actions">
         <button matButton="filled" (click)="cancel()">Cancel</button>
