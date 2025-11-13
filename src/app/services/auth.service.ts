@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 interface JwtPayload {
   nameid: string,
   unique_name: string;
+  exp: number;
 }
 
 @Injectable({
@@ -16,6 +17,21 @@ interface JwtPayload {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
+
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
+    try
+    {
+      const decodedToken = this.getDecodedToken();
+      const now = Date.now() / 1000;
+      return decodedToken.exp > now;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  }
 
   signUp(request: AuthRequest) : Observable<AuthResult>  {
     return this.http.post<AuthResult>(
@@ -33,13 +49,8 @@ export class AuthService {
     localStorage.removeItem("token");
   }
 
-  private getDecodedToken(): JwtPayload | null {
-    const token = localStorage.getItem("token");
-    if(token)
-    {
-      return jwtDecode<JwtPayload>(token);
-    }
-    return null;
+  private getDecodedToken(): JwtPayload {
+    return jwtDecode<JwtPayload>(localStorage.getItem("token")!);
   }
 
   getUserId(): number | null {

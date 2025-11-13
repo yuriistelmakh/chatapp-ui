@@ -4,6 +4,7 @@ import { Signup } from './features/auth/signup/signup';
 import { ChatLayoutComponent } from './features/chat/chat-layout/chat-layout';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -19,7 +20,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayout,
     children: [
-      { path: 'chat', component: ChatLayoutComponent }
+      { path: 'chat', component: ChatLayoutComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: '**', redirectTo: 'login'}
