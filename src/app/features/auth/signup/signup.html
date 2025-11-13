@@ -12,7 +12,19 @@
                 <mat-error>Username is required</mat-error>
                 }
                 @else if (form.get('username')?.hasError('minlength')) {
-                <mat-error>Minimum 3 characters</mat-error>
+                <mat-error>
+                    Minimum 3 characters
+                </mat-error>
+                }
+                @else if (form.get('username')?.hasError('maxlength')) {
+                <mat-error>
+                    Maximum 30 characters
+                </mat-error>
+                }
+                @else if (form.get('username')?.hasError('pattern')) {
+                <mat-error>
+                    Only latin letters and numbers
+                </mat-error>
                 }
             </mat-form-field>
 
@@ -21,20 +33,33 @@
                 <mat-icon matIconPrefix>lock</mat-icon>
                 <input matInput type="password" name="password" placeholder="••••••" formControlName="password" />
                 @if (form.get('password')?.hasError('required')) {
-                    <mat-error>
-                        Password is required
-                    </mat-error>
+                <mat-error>
+                    Password is required
+                </mat-error>
                 }
                 @else if (form.get('password')?.hasError('minlength')) {
-                    <mat-error>
-                        Minimum 6 characters
-                    </mat-error>
+                <mat-error>
+                    Minimum 3 characters
+                </mat-error>
+                }
+                @else if (form.get('password')?.hasError('maxlength')) {
+                <mat-error>
+                    Maximum 64 characters
+                </mat-error>
                 }
             </mat-form-field>
 
             <p class="error-msg">{{ errorMsg }}</p>
 
-            <button matButton="filled" type="submit">Sign up</button>
+            <button matButton="filled" type="submit" [disabled]="loading">
+                {{ loading ? "Signing in..." : "Sign in" }}
+            </button>
+
+            @if(loading) {
+                <div class="overlay">
+                    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+                </div>
+            }
         </form>
 
         <div class="extras">

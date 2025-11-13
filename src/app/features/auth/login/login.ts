@@ -6,6 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-signup',
@@ -17,18 +18,20 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatProgressSpinner
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   form: FormGroup;
+  loading: boolean = false;
   errorMsg: string | undefined = undefined;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: [''],
+      password: ['']
     });
   }
 
@@ -37,6 +40,9 @@ export class Login {
       this.form.markAllAsTouched();
       return;
     }
+
+    this.loading = true;
+
     const username = this.form.get('username')?.value;
     const password = this.form.get('password')?.value;
 
@@ -47,5 +53,7 @@ export class Login {
       },
       error: (err) => (this.errorMsg = err.error),
     });
+
+    this.loading = false;
   }
 }

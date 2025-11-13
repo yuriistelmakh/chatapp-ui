@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth.service';
 import { NgIf } from '@angular/common';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { Router } from '@angular/router';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +19,8 @@ import { Router } from '@angular/router';
     MatIcon,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinner
   ],
   templateUrl: './signup.html',
   styleUrl: './signup.css',
@@ -26,11 +28,12 @@ import { Router } from '@angular/router';
 export class Signup {
   form: FormGroup;
   errorMsg: string | undefined = undefined;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     this.form = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9]+$")]],
+      password: ['', [Validators.required, Validators.maxLength(64)]],
     });
   }
 
@@ -41,6 +44,7 @@ export class Signup {
     }
     else
     {
+      this.loading = true;
       const username = this.form.get('username')?.value;
       const password = this.form.get('password')?.value;
 
@@ -51,6 +55,8 @@ export class Signup {
         },
         error: err => this.errorMsg = err.error
       });
+
+      this.loading = false;
     }
   }
 }

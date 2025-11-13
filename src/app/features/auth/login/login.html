@@ -2,17 +2,15 @@
     <div class="panel">
         <h1 class="title">Log in</h1>
         <p class="subtitle">Welcome back to ChatApp</p>
-
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form" autocomplete="on">
             <mat-form-field appearance="outline" class="field" subscriptSizing="dynamic">
                 <mat-label>Username</mat-label>
                 <mat-icon matIconPrefix>person</mat-icon>
                 <input matInput name="username" placeholder="john" formControlName="username" />
                 @if (form.get('username')?.hasError('required')) {
-                <mat-error>Username is required</mat-error>
-                }
-                @else if (form.get('username')?.hasError('minlength')) {
-                <mat-error>Minimum 3 characters</mat-error>
+                <mat-error>
+                    Username is required
+                </mat-error>
                 }
             </mat-form-field>
 
@@ -20,15 +18,9 @@
                 <mat-label>Password</mat-label>
                 <mat-icon matIconPrefix>lock</mat-icon>
                 <input matInput type="password" name="password" placeholder="••••••" formControlName="password" />
-
                 @if (form.get('password')?.hasError('required')) {
                 <mat-error>
                     Password is required
-                </mat-error>
-                }
-                @else if (form.get('password')?.hasError('minlength')) {
-                <mat-error>
-                    Minimum 3 characters
                 </mat-error>
                 }
             </mat-form-field>
@@ -36,7 +28,15 @@
             {
                 <p class="error-msg">{{ errorMsg }}</p>
             }
-            <button matButton="filled" type="submit">Log in</button>
+            <button matButton="filled" type="submit" [disabled]="loading">
+                {{ loading ? "Loging in..." : "Log in" }}
+            </button>
+
+            @if(loading) {
+                <div class="overlay">
+                    <mat-progress-spinner mode="indeterminate" diameter="60"></mat-progress-spinner>
+                </div>
+            }
         </form>
 
         <div class="extras">
