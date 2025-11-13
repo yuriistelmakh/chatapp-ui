@@ -3,5 +3,8 @@
         <p class="welcome-msg">
             Welcome back, {{ username ?? 'Anonymous' }}
         </p>
+        <button class="logout-btn" matButton="filled" (click)="onLogout()">
+            Logout
+        </button>
     </div>
 </header>

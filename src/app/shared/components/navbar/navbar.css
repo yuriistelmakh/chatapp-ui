@@ -2,7 +2,19 @@ header {
     background-color: var(--mat-sys-inverse-primary);
     color: var(--mat-sys-on-primary-container);
     display: flex;
-    padding: 16px;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 10px;
+}
+
+.logout-btn {
+    justify-self: flex-end;
+    margin-right: 10px
 }
 
 .welcome-msg {

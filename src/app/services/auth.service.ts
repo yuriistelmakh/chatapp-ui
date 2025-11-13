@@ -29,6 +29,10 @@ export class AuthService {
     );
   }
 
+  logout() {
+    localStorage.removeItem("token");
+  }
+
   private getDecodedToken(): JwtPayload | null {
     const token = localStorage.getItem("token");
     if(token)
