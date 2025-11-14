@@ -31,7 +31,7 @@ h2 {
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: var(--mat-sys-primary) transparent;
-    scrollbar-gutter: stable;
+    scrollbar-gutter: auto;
 }
 
 .new-chat-btn {

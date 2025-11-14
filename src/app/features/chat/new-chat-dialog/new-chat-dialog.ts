@@ -33,7 +33,7 @@ import { UserDto } from '../../../dtos/UserDto';
   templateUrl: './new-chat-dialog.html',
   styleUrl: './new-chat-dialog.css',
 })
-export class NewChatDialog implements OnInit {
+export class NewChatDialog implements OnInit, AfterViewInit {
   formControl = new FormControl<string | UserDto>('');
   chatName = '';
 
